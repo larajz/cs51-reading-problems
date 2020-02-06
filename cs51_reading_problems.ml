@@ -105,6 +105,7 @@ let rec square_all (lst : int list) : int list =
   | [] -> []
   | head :: tail -> (head * head) :: square_all tail ;;
 
+(* exercise 44 *)
 let rec append (lst1 : int list) (lst2 : int list) : int list =
   match lst1 with
   | [] -> lst2
@@ -112,7 +113,7 @@ let rec append (lst1 : int list) (lst2 : int list) : int list =
 
 
 (* the fold abstraction *)
-let rec fold (f: int -> int -> int)
+let rec fold (f : int -> int -> int)
     (init : int)
     (xs : int list)
   : int =
@@ -156,3 +157,49 @@ let rec reduce (f : int -> int -> int)
 (* exercise 47 *)
 let sum (lst : int list) : int = reduce (+) lst ;;
 let prod (lst : int list) : int = reduce ( * ) lst ;;
+
+(* exercise 48 *)
+let rec map (f : int -> int) (xs : int list) : int list =
+  match xs with
+  | [] -> []
+  | head :: tail -> f head :: (map f tail) ;;
+
+(* the map function takes two arguments, the first of which is
+   itself a function, to be applied to all elements of its
+   second integer list argument *)
+
+let rec fold (f : int -> int -> int)
+       (init : int)
+       (xs : int list)
+     : int =
+     match xs with
+     | [] -> init
+     | head :: tail -> f head (fold f init tail) ;;
+(* HELP! *)
+
+(* exercise 50 *)
+let rec filter (f : int -> bool) (lst : int list) : int list =
+  match lst with
+  | [] -> []
+  | head :: tail -> if f head then head :: filter f tail
+    else filter f tail ;;
+
+filter (fun x -> x mod 2 <> 0) [3;4;5] ;;
+
+(* exercise 51 *)
+let evens = filter (fun x -> x mod 2 = 0) ;;
+let odds = filter (fun x -> x mod 2 <> 0) ;;
+let positives = filter (fun x -> x > 0) ;;
+let negatives = filter (fun x -> x < 0) ;;
+
+(* exercise 52 *)
+let reverse (lst : int list) : int list =
+  List.fold_right (fun head tailvalue -> tailvalue @ [head]) lst [] ;;
+
+(* alternatively, *)
+let reverse (lst : int list) : int list =
+  List.fold_left (fun prefixvalue next -> next :: prefixvalue) [] lst ;;
+
+
+(* exercise 53 *)
+let rec append (lst1 : int list) (lst2 : int list) : int list =
