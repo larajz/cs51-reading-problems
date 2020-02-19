@@ -106,3 +106,42 @@ let (@+) f g x = f (g x) ;;
 
 (* problem 61 *)
 (* hd : 'a list -> a , tl : 'a list -> a list *)
+
+
+(* problem 4, exercise 54*)
+let f (i,a,b) alst =
+  if i = 0 then [b]
+  else if (List.hd(alst) = a) then [b]
+  else [b]
+;;
+
+(* problem 5 *)
+let f (x : bool) =
+  if x then ();;
+
+(* problem 6 *)
+let g (thing : 'a) (f : 'a -> 'b) : 'b =  f thing;;
+
+
+(* exercise 55 *)
+let rec fold
+    (f : 'a -> 'a -> 'a)
+    (init : 'a)
+    (xs : 'a list)
+         : 'a =
+    match xs with
+      | [] -> init
+      | hd :: tl -> f hd(fold f init tl);;
+
+(* exercise 56 *)
+(*
+1. x is a float, so f : float -> float
+2. (int -> 'a) -> int -> 'a
+3. x is a list, then it will return the list, but it also returns an element of the list? it won't type
+4. ('a -> 'a) list -> 'a -> 'a
+*)
+(* exercise 57 *)
+let mapper (f) (lst : 'a list) : 'a list=
+  List.fold_right (fun x y -> (f x) :: y) lst [];;
+(* exercise 58 *)
+(* map returns a list, and fold_right doesn't necessarily *)
